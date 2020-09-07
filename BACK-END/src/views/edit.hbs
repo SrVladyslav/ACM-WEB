@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Editar profile</title>
+    {{!-- FONTS --}}
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@500;800;900&display=swap" rel="stylesheet">
+
+    {{!-- ICONS --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    {{!-- BOOTSTRAP --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    {{!-- JQuery --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
+
+</head>
+<body>
+    {{> nav }}
+    {{> modal}}
+    {{> messages}}
+    <div class="separator"></div>
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Editar profile</h3>
+                        <hr>
+                        <form action="/profile/edit/{{user.id}}" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <center><img src="{{user.image_url}}" alt="IMG" class="profile_img"></center>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Nombre</label>
+                                <input type="text" placeholder="Name" value="{{user.name}}" class="form-control" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Descripción</label>
+                                <textarea type="body" placeholder="Description" rows="3" class="form-control" name="description">{{user.description}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Foto </label>
+                                <input type="file" name="tg_file">
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" placeholder="Email" value="{{user.email}}" class="form-control" name="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Contraseña</label>
+                                <input type="password" placeholder="Password" class="form-control" name="password">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="Repeat password" class="form-control" name="password_r">
+                            </div>
+                            <div class="form-group text-center">
+                                <button class="btn btn-success btn-publish">Actualizar</button>
+                                <a href="/profile" class="btn btn-danger btn-delete">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

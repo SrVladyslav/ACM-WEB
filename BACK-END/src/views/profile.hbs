@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ACM Active POSTS </title>
+    {{!-- FONTS --}}
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@500;800;900&display=swap" rel="stylesheet">
+
+    {{!-- ICONS --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    {{!-- BOOTSTRAP --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    {{!-- JQuery --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
+
+</head>
+<body>
+    {{> nav }}
+    {{> modal}}
+    {{> messages}}
+    <div class="separator"></div>
+
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 mx-auto">
+                                <img src="{{user.image_url}}" alt="Logo" class="card-img-top m-2 rounded-circle profile_img">
+                            </div>
+                            <div class="col-md-6 col-sm-12 mx-auto text-left">
+                                <h5><b>Nombre:</b> {{user.name}} </h5>
+                                <h5><b>Descripción:</b> {{user.description}} </h5>
+                                <h5><b>Tags:</b> {{user.tags}}</h5>
+                                <hr>
+                                <h5><b>Usuario:</b> {{user.username}} </h5>
+                                <h5><b>Email:</b> {{user.email}} </h5>
+                                <h5><b>Rol:</b> {{user.role}} </h5>
+                            </div>
+                        </div>
+                        {{#profile_post user.role}}
+                            <a href="/create_post" class="btn btn-primary m-2">+Post</a>
+                        {{/profile_post}}
+                        <a href="/profile/edit/{{user.id}}" class="btn btn-secondary but_style">Editar Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row space">
+            <div class="col-md-12">
+                <div class="card-body text-center">
+                    <h3>My posts</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {{#each posts}}
+                <div class="col-md-6">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <p class="m-2">
+                                <img src="{{image_url}}" alt="Image" class="img">
+                            </p>
+                            <h3 class="m-2 card_title in_row">
+                                <div class="gray">[{{post_type}}]</div> {{title}}
+                            </h3>
+                            <hr>
+                            <p class="m-2 card_body">
+                                {{body}}
+                            </p>
+                            <hr>
+                            <p class="m-3 card_publi">
+                                Posted {{timeago published}} {{#state proposed}} {{/state}}
+                            </p>
+                            
+                            {{#restrict_edit proposed id}}
+                                <a href="/posts/edit/{{id}}" class="btn btn-secondary">Edit1</a>
+                            {{/restrict_edit}}
+                            {{#restrict_delete proposed_by id}}
+                                <div onclick="sure_about({{ id }})" class="btn btn-danger">
+                                    Eliminar
+                                </div>
+                            {{/restrict_delete}}
+                        </div>
+                    </div>
+                </div>
+            {{else}}
+                <div class="col-md-12 mx-auto">
+                    <div class="card card-body text-center">
+                        <p>Aún no hay posts.</p>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    {{> footer}}
+    <script>
+        // Delete post Script
+        function sure_about(id) {
+            if(confirm("Do you really want to delete this post?")){
+                window.location.href = "/posts/to_delete/" + id
+            }
+        }
+
+        // Delete proposed post
+        function sure_about_propose(id) {
+            if(confirm("Do you really want to delete this post?")){
+                window.location.href = "/posts/delete/" + id
+            }
+        }
+    </script>
+</body>
+</html>

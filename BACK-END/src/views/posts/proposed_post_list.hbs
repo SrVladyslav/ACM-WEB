@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ACM Active POSTS </title>
+    {{!-- FONTS --}}
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@500;800;900&display=swap" rel="stylesheet">
+
+    {{!-- ICONS --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    {{!-- BOOTSTRAP --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    {{!-- JQuery --}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
+
+</head>
+<body>
+    {{> nav }}
+    {{> modal}}
+    {{> messages}}
+    <div class="separator"></div>
+
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                <h5><b>Posts propuestos </b> {{#if posts}}[{{count}}]{{/if}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {{#each posts}}
+                <div class="col-md-12">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <p class="m-2">
+                                <img src="{{image_url}}" alt="Image" class="img">
+                            </p>
+                            <h3 class="m-2 card_title">
+                                {{title}}
+                            </h3>
+                            <hr>
+                            <p class="m-2 card_body">
+                                {{body}}
+                            </p>
+                            <p class="m-3 card_publi">
+                                Posted: {{timeago published}} by {{by}}
+                            </p>
+                            <div onclick="publish({{id}})" class="btn btn-success btn-publish">
+                                Publicar
+                            </div>
+                            <a href="/posts/edit/{{id}}" class="btn btn-secondary but_style">Editar</a>
+                            <div onclick="sure_about({{id}})" class="btn btn-danger btn-delete">
+                                Denegar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{else}}
+            <div class="col-md-12 mx-auto">
+                <div class="card card-body text-center">
+                    <img src="/img/icons/spider.png" alt="Spider Web" class="spider_web mx-auto">
+                    <p><b>No hay posts todavia!</b></p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <script>
+        // Delete post Script
+        function sure_about(id) {
+            if(confirm("Seguro que quieres eliminarlo?")){
+                window.location.href = "/posts/to_delete/" + id
+            }
+        }
+
+        // Publish the post 
+        function publish(id) {
+            if(confirm("Seguro que quieres hacerlo público?")){
+                window.location.href = "/posts/accept_propose/" + id
+            }
+        }
+    </script>
+</body>
+</html>
